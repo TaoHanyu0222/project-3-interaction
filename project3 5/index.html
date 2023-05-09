@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Raleway:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/font/stylesheet.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/style2.css" />
+    <title>talk</title>
+    <script src="./assets/jq.min.js"></script>
+    <style>
+      @keyframes move1 {
+        0% {
+          transform: translateX(0) rotateY(0);
+        }
+        49% {
+          transform: translateX(900px) rotateY(0);
+        }
+        50% {
+          transform: translateX(900px) rotateY(180deg);
+        }
+        51% {
+          transform: translateX(900px) rotateY(180deg);
+        }
+        100% {
+          transform: translateX(0) rotateY(180deg);
+        }
+      }
+      @keyframes move2 {
+        0% {
+          transform: translateX(100px) rotateY(0);
+        }
+        49% {
+          transform: translateX(900px) rotateY(0);
+        }
+        50% {
+          transform: translateX(900px) rotateY(180deg);
+        }
+        51% {
+          transform: translateX(900px) rotateY(180deg);
+        }
+        100% {
+          transform: translateX(0) rotateY(180deg);
+        }
+      }
+      .dogmove1 {
+        animation: move1 5s infinite;
+        margin-bottom: 80px;
+      }
+
+      .dogmove2 {
+        transform: translateX(100px) rotateY(0);
+        animation: move2 10s infinite;
+      }
+      @media screen and (max-width: 1000px) {
+        .popup,
+        .choice span {
+          font-size: 5vw;
+          padding: 0px 25px;
+        }
+        .popup-imglink img {
+          width: 200px;
+        }
+        .dog {
+          width: 200px !important;
+        }
+        .filter-box {
+          max-width: 70vw;
+        }
+        .filter-box li {
+          font-size: 5vw;
+        }
+        .filter-box .til {
+          line-height: 90px;
+        }
+        .filter-box.active .til {
+          line-height: 40px;
+        }
+        .filter-box .hidden-box {
+          flex-direction: column;
+        }
+        .hidden-box .info {
+          font-size: 5vw;
+        }
+        .end {
+          flex-direction: column;
+        }
+        .tst {
+          margin-top: 0;
+        }
+        .tst .popup {
+          margin-left: 0 !important;
+          width: 70vw;
+        }
+        .end img {
+          width: 200px;
+        }
+      }
+      @media screen and (max-width: 500px) {
+        .talk-contain {
+          padding: 50px 10vw;
+        }
+        .popup,
+        .choice span {
+          padding: 10px 20px;
+          line-height: 45px;
+          border-radius: 45px;
+        }
+        .popup-imglink img {
+          width: 100px;
+        }
+        .dog {
+          width: 100px !important;
+        }
+        .filter-box .til {
+          line-height: 45px;
+        }
+        .end {
+          flex-direction: column;
+        }
+        .tst {
+          margin-top: 0;
+        }
+        .tst .popup {
+          margin-left: 0 !important;
+          width: 70vw;
+        }
+        .end img {
+          width: 100px;
+        }
+        #borough span img {
+          width: 35px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg"></div>
+    <header>Tao</header>
+    <main>
+      <div class="talk-contain">
+        <div>
+          <div class="popup">Hi, Are you Still in New York City right now?</div>
+        </div>
+        <div class="right">
+          <div class="popup">Yea</div>
+        </div>
+        <div class="right">
+          <div class="popup">Why asking?</div>
+        </div>
+        <div>
+          <div class="popup">
+            I am so busy today. Can you help me to walk my dogs?
+          </div>
+        </div>
+        <div>
+          <div class="popup">
+            <img src="./assets/Group 2.png" style="width: 200px" />
+          </div>
+        </div>
+        <div class="right">
+          <div class="choice choices runlist">
+            <span id="sure">SURE!</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+    let allData = []
+    let condition = {
+      brough: '',
+      neighborhood: ''
+    }
+    getAllData()
+    function getAllData() {
+      fetch('./assets/data.json')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          allData = data
+        })
+        .catch((error) => console.log(error))
+    }
+    // $('#query').on('keydown', (event) => {
+    //   if (event.keyCode == 13) {
+    //     const code = $('#query').val()
+    //     let obj = allData.filter((item) => item.ZIPCODE == code)
+    //     console.log(obj)
+    //     //
+    //     let html = `<div>
+    //       <div class="popup">Got it!</div>
+    //     </div>
+    //     <div>
+    //       <div class="popup">There are multiple choices of ground
+    //         surfaces. Which you prefer? Sand/
+    //         Natural/Concrete?</div>
+    //     </div>
+    //     <div class="right">
+    //       <div class="choice choices">
+    //         <span>Natural</span>
+    //         <span>Concrete</span>
+    //         <span>Sand </span>
+    //       </div>
+    //     </div>
+    //     `
+    //     $('.talk-contain').append(html)
+    //   }
+    // })
+    const buildHtml = (data) => {
+      let tmp = data.map((e) => {
+        return `<li class="${e.BOROUGH}">
+                <div class="til">${e.NAME}</div>
+                <div class="hidden-box">
+                  <div class="info">
+                    <p>Zip code:${e.ZIPCODE}</p>
+                    <p>Borough:${e.NEIGNBORHOOD}</p>
+                  </div>
+                  <div class="info">
+                    <p>Seating: ${e.SEATIING || 'NO'}</p>
+                    <p>Surface: ${e.SURFACE || '?'}</p>
+                  </div>
+                  <div class="img"></div>
+                </div>
+              </li>`
+      })
+      return tmp
+    }
+    function scroll() {
+      let scrollHeight = $(document).scrollTop() + 800
+      window.scrollTo(0, scrollHeight)
+    }
+    $('.talk-contain').on('click', '#sure', function () {
+      if ($(this).attr('talked')) {
+        //
+      } else {
+        $(this).attr('talked', true)
+        let html = `<div class="popwithimg">
+          <div class="popup">Let’s Meet Jeju and CEO!</div>
+          <div class="popup-imglink">
+            <img
+              style="transform: translate(16vw, -2px) rotate(-20deg)"
+              src="./assets/b.gif"
+            />
+            <img
+              style="transform: translate(23vw, -14px) rotate(0deg)"
+              src="./assets/a.gif"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="popup">
+            Please take them to the dog run in your neighbourhood!
+          </div>
+        </div>
+        <div class="right">
+          <div class="choice choices">
+            <span id="ok">OK</span>
+          </div>
+        </div>`
+        $('.talk-contain').append(html)
+        scroll()
+      }
+    })
+    $('.talk-contain').on('click', '#ok', function () {
+      if ($(this).attr('talked')) {
+        //
+      } else {
+        $(this).attr('talked', true)
+        let html = `<div>
+          <div class="popup">Which borough do you lived in ?</div>
+        </div>
+        <div class="popwithimg">
+          <div
+            class="popup-imglink"
+            style="margin-bottom: -70px; margin-left: 70px"
+          >
+            <img src="./assets/c.gif" class="dog" style="width:250px"/>
+            <img src="./assets/d.gif" class="dog" style="width:200px"/>
+          </div>
+          <div class="popup" style="border: none"></div>
+        </div>
+        <div class="right">
+          <div class="choice choices" id="borough">
+            <span borough="B">Brooklyn<img src="./assets/dog4.png" /></span>
+            <span borough="X">Bronx<img src="./assets/dog5.png" /></span>
+            <span borough="M">Manhattan<img src="./assets/dog3.png" /></span>
+            <span borough="R">Roosevelt Island<img src="./assets/dog2.png" /></span>
+            <span borough="Q">Queens<img src="./assets/dog1.png" /></span>
+
+          </div>
+        </div>`
+        $('.talk-contain').append(html)
+        scroll()
+      }
+    })
+    $('.talk-contain').on('click', '#borough span', function () {
+      // filter by borough
+      const value = $(this).attr('borough')
+      condition.brough = value
+      let neighbors = allData.filter((e) => e.BOROUGH == value)
+      const neighborstmp = neighbors.map((e) => e.NEIGHBORHOOD)
+      const neighborshtml = Array.from(new Set(neighborstmp))
+        .map((e) => `<span>${e}</span>`)
+        .join('')
+      if ($('#borough').attr('talked')) {
+        //again
+        $('#Neighborhood').html(neighborshtml)
+      } else {
+        $('#borough').attr('talked', true)
+        $('#borough').append('<a class="tips">You can choose again</a>')
+        let html = `<div>
+            <div class="popup">Which Neighborhood?</div>
+          </div>
+          <div class="right">
+            <div class="choice choices" id="Neighborhood">
+             ${neighborshtml}
+            </div>
+          </div>`
+        $('.talk-contain').append(html)
+        scroll()
+      }
+    })
+    $('.talk-contain').on('click', '#Neighborhood span', function () {
+      //filter
+      const value = $(this).text()
+      condition.neighborhood = value
+      let tmp = allData.filter(
+        (e) =>
+          e.BOROUGH == condition.brough &&
+          e.NEIGHBORHOOD == condition.neighborhood
+      )
+      const runslisthtml = tmp
+        .map(
+          (e) => `<span class="filter-box" name="${e.NAME}"><li class="${
+            e.BOROUGH
+          }">
+                <div class="til">${e.NAME}</div>
+                <div class="hidden-box">
+                  <div class="info">
+                    <p>Zip code:${e.ZIPCODE}</p>
+                    <p>Borough:${e.NEIGHBORHOOD}</p>
+                    <p>Seating: ${e.SEATIING || 'NO'}</p>
+                    <p>Surface: ${e.SURFACE || '?'}</p>
+                  </div>
+                  <div class="info">
+                  </div>
+                 
+                </div>
+              </li></span>`
+        )
+        .join('')
+      if ($('#Neighborhood').attr('talked')) {
+        //
+        $('#runlist').html(runslisthtml)
+      } else {
+        $('#Neighborhood').attr('talked', true)
+        $('#Neighborhood').append('<a class="tips">You can choose again</a>')
+
+        let html = `<div>
+          <div class="popup">Got it!</div>
+        </div>
+        <div>
+          <div class="popup">
+            I sent you list of Dogruns in this neighborhood, you can choose one
+            to go!
+          </div>
+        </div>
+        <div class="right">
+          <div class="choice choices runlist" id="runlist">
+           ${runslisthtml}
+          </div>
+        </div>
+        `
+        $('.talk-contain').append(html)
+        scroll()
+      }
+      $('#runlist .filter-box')
+        .hover(
+          function () {
+            $(this).addClass('active')
+            $(this).find('li').addClass('active')
+          },
+          function () {
+            $(this).removeClass('active')
+            $(this).find('li').removeClass('active')
+          }
+        )
+        .click(function () {
+          const name = $(this).closest('.filter-box').attr('name')
+          window.open('./listView.html#' + name, '_blank')
+        })
+    })
+
+    $('.talk-contain').on('click', '#runlist .filter-box', function () {
+      if ($('#runlist').attr('talked')) {
+        //
+      } else {
+        $('#runlist').attr('talked', true)
+        const html = `<div>
+          <div class="popup">Sounds good.</div>
+        </div>
+        <div>
+          <div class="popup">Pls shoot a video of them playing in the dog run.</div>
+        </div>
+        <div class="right">
+          <div class="popup" id="video">👌<a class="tips sp">Click here to sent video</a></div>
+        </div>`
+        $('.talk-contain').append(html)
+        scroll()
+      }
+    })
+    $('.talk-contain').on('click', '#video', function () {
+      if ($('#video').attr('talked')) {
+        //
+      } else {
+        $('#video').attr('talked', true)
+        const html = `
+        <div class="right">
+          <div class="popup sp">
+            <div class="frame">
+              <img src="./assets/e.gif" class="dogmove1" />
+              <img src="./assets/f.gif" class="dogmove2" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="popup">Thx!<a class="tips-r" id="exit">Click here to exit</a></div>
+        </div>`
+        $('.talk-contain').append(html)
+        scroll()
+      }
+    })
+    $('.talk-contain').on('click', '#exit', function () {
+      if ($('#exit').attr('talked')) {
+        //
+      } else {
+        $('#exit').attr('talked', true)
+        const html = `
+          <div class="end">
+              <div>
+                <img src="./assets/g.gif" />
+              </div>
+              <div class="tst">
+                <div class="popup" style="margin-left: -90px;">Thank You! See you next time!</div>
+                <a href="./listView.html" style="color:#000" target="blank"><div class="popup">
+                  Click here to check more info about Dog runs in NYC!
+                </div></a>
+              </div>
+            </div>
+          `
+        $('.talk-contain').append(html)
+      }
+    })
+  })
+</script>

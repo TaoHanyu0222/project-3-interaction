@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Raleway:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/font/stylesheet.css" />
+    <link rel="stylesheet" href="./assets/style2.css" />
+    <title>ListView</title>
+    <script src="./assets/jq.min.js"></script>
+    <style>
+      @media screen and (max-width: 550px) {
+        .talk-contain {
+          padding: 50px 10vw;
+        }
+        .hidden-box {
+          flex-direction: column;
+        }
+        .hidden-box .img {
+          margin-top: 57px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg"></div>
+  </body>
+</html>
+<script>
+  $(document).ready(function () {
+    let name = window.location.href.split('#')[1] || ''
+    let allData = []
+    getAllData()
+    //
+    function getAllData() {
+      fetch('./assets/data.json')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          allData = data
+          render()
+        })
+        .catch((error) => console.log(error))
+    }
+    const buildHtml = (data) => {
+      let tmp = data.map((e) => {
+        return `<li class="${e.BOROUGH}" id="${e.NAME.replace(/ /g, '')}">
+                <div class="til">${e.NAME}</div>
+                <div class="hidden-box">
+                  <div class="info">
+                    <p>Zip code:${e.ZIPCODE}</p>
+                    <p>Borough:${e.NEIGHBORHOOD}</p>
+                  </div>
+                  <div class="info">
+                    <p>Seating: ${e.SEATIING || 'No'}</p>
+                    <p>Surface: ${e.SURFACE || '?'}</p>
+                  </div>
+                  <div class="img"></div>
+                  <div class="info link">
+                    <p>Location:<a href="${
+                      e.LOCATION
+                    }" target="_blank" class="linkmap">Google Map</a></p>  
+                  </div>
+                </div>
+              </li>`
+      })
+      return tmp
+    }
+    function render() {
+      const html = `<div class="right">
+          <div class="popup">
+            <ul class="filter-box">
+              ${buildHtml(allData).join('')}
+            </ul>
+            <div class="filter-btn">
+              <div class="B" data="B" name="Brooklyn">B<img src="./assets/dog4.png" /></div>
+              <div class="M" data="M" name="Manhattan">M<img src="./assets/dog3.png" /></div>
+              <div class="Q" data="Q" name="Queens">Q<img src="./assets/dog1.png" /></div>
+              <div class="R" data="R" name="Roosevelt Island">R<img src="./assets/dog2.png" /></div>
+              <div class="X" data="X" name="Bronx">X<img src="./assets/dog5.png" /></div>
+              <div class="A" data="" name="">ALL BOROUGHS</div>
+              <span class="A" id="back">Back</span>
+            </div>
+          </div>
+          <div class="cur-brough"></div>
+        </div>`
+      $('body').html(html)
+      const id = decodeURIComponent(name).replace(/ /g, '')
+      let scorllTop = $('#' + id)
+        .addClass('active')
+        .offset().top
+      window.scrollTo(0, scorllTop - 80)
+      $('.linkmap').click(function (event) {
+        event.stopPropagation()
+      })
+    }
+    $('body').on('click', '.filter-box li ', function () {
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active')
+      } else {
+        $(this).addClass('active')
+      }
+    })
+    $('body').on('click', '.filter-btn>div', function () {
+      let name = $(this).attr('data')
+      let name2 = $(this).attr('name')
+      if (name2 == '') {
+        $('.cur-brough').text(name2).hide()
+      } else {
+        $('.cur-brough').text(name2).show()
+      }
+      const data = allData.filter((e) => e.BOROUGH == name || name == '')
+      const tmp = buildHtml(data)
+      $('.filter-box').html(tmp)
+      window.scrollTo(0, 0)
+    })
+    $('body').on('click', '#back', function (e) {
+      window.close()
+    })
+  })
+</script>

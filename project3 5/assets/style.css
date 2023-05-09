@@ -1,0 +1,255 @@
+html {
+  scroll-behavior: smooth;
+}
+body {
+  cursor: url('./001.ico'), pointer;
+  font-family: 'Courier New', Courier, monospace;
+  background: #f1f0f0;
+  padding-top: 124px;
+  scroll-behavior: smooth;
+}
+.bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent
+    url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation 0.2s infinite;
+  opacity: 0.9;
+  visibility: visible;
+}
+@keyframes bg-animation {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -5%);
+  }
+  20% {
+    transform: translate(-10%, 5%);
+  }
+  30% {
+    transform: translate(5%, -10%);
+  }
+  40% {
+    transform: translate(-5%, 15%);
+  }
+  50% {
+    transform: translate(-10%, 5%);
+  }
+  60% {
+    transform: translate(15%, 0);
+  }
+  70% {
+    transform: translate(0, 10%);
+  }
+  80% {
+    transform: translate(-15%, 0);
+  }
+  90% {
+    transform: translate(10%, 5%);
+  }
+  100% {
+    transform: translate(5%, 0);
+  }
+}
+li {
+  list-style: none;
+}
+header {
+  font-size: 60px;
+  line-height: 60px;
+  height: 60px;
+  padding: 30px 0;
+  border-bottom: 3px solid #000;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #f1f0f0;
+  width: 100%;
+  z-index: 2;
+}
+.talk-contain {
+  padding: 50px 100px;
+  /* height: calc(100vh - 61px);
+  display: flex;
+  flex-direction: column; */
+}
+.talk-contain > div {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 90px;
+}
+.talk-contain > div.right {
+  justify-content: flex-end;
+}
+.popup {
+  font-size: 65px;
+  line-height: 75px;
+  border: 3px solid #000;
+  display: inline-block;
+  padding: 20px 40px;
+  max-width: 1000px;
+  border-radius: 65px;
+  min-height: 45px;
+  position: relative;
+  word-break: break-word;
+}
+.popup-input {
+  min-width: 300px;
+}
+.popup::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  border: 3px solid #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 100%;
+  left: -20px;
+}
+.popup-imglink {
+  filter: grayscale(1);
+}
+.popup-imglink:hover {
+  filter: grayscale(0);
+}
+.tips {
+  position: absolute;
+  right: 10px;
+  bottom: -60px;
+  font-size: 25px;
+  height: 50px;
+  color: #9f9f9f;
+  line-height: 25px;
+}
+.tips.sp {
+  width: 300px;
+  cursor: url('./002.ico'), pointer;
+}
+.tips-r {
+  position: absolute;
+  width: 300px;
+  left: 10px;
+  bottom: -60px;
+  font-size: 25px;
+  color: #9f9f9f;
+  line-height: 50px;
+  height: 50px;
+  cursor: url('./002.ico'), pointer;
+}
+.right .popup::after {
+  left: unset;
+  right: -20px;
+}
+.popup input {
+  font-size: 65px;
+  min-width: 300px;
+  position: absolute;
+  background: #f1f0f0;
+  top: 0;
+  left: 40px;
+  width: calc(100% - 80px);
+  height: calc(100% - 2px);
+  border: none;
+  outline: none;
+}
+.popup span {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  width: 103%;
+  text-align: center;
+}
+.choice {
+  position: relative;
+  max-width: 1025px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.choice span {
+  display: inline-block;
+  font-size: 65px;
+  line-height: 50px;
+  border: 3px solid #000;
+  border-radius: 46px;
+  padding: 25px 30px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+}
+
+.choice span:hover,
+.clickable:hover {
+  background-color: #9f9f9f;
+  cursor: url('./002.ico'), pointer;
+}
+.choice::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  border: 3px solid #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 100%;
+  right: -20px;
+}
+.popwithimg {
+  flex-direction: column;
+}
+.popup-imglink img {
+  width: 300px;
+}
+.runlist {
+  justify-content: flex-end;
+}
+.runlist .filter-box.active {
+  width: 1000px;
+}
+.runlist .filter-box li {
+  border-bottom: none;
+  background: none;
+}
+.popup.sp {
+  width: 1000px;
+  border: none;
+}
+.popup .frame {
+  display: flex;
+  flex-direction: column;
+}
+.popup .frame img {
+  width: 150px;
+}
+.end {
+  display: flex;
+  padding-top: 100px;
+}
+.tst {
+  margin-top: -100px;
+}
+.tst .popup {
+  width: 50vw;
+  margin-bottom: 33px;
+}
+.end img {
+  width: 450px;
+  filter: grayscale(1);
+}
+.end img:hover {
+  width: 450px;
+  filter: grayscale(0);
+}
+#borough span {
+  display: flex;
+  align-items: center;
+}
+#borough span img {
+  width: 6vw;
+}
